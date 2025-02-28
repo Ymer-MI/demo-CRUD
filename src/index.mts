@@ -1,7 +1,10 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import todoRoutes from './routes/todoRoutes.mts';
 
-const app = express().use(express.json()), PORT = 3000;
+dotenv.config();
+
+const app = express().use(express.json()), PORT = process.env.PORT || 3000;
 
 app.use('/todos', todoRoutes);
 
