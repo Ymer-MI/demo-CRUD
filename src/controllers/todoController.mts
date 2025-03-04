@@ -4,15 +4,31 @@ import { Todo } from '../models/Todo.mjs';
 const todos: Todo[] = [
     new Todo('Learn TypeScript', true),
     new Todo('Learn Express'),
-    new Todo('Learn MongoDB')
+    new Todo('Learn MongoDB'),
+    new Todo('Learn React'),
+    new Todo('Learn Node.js'),
+    new Todo('Ignore GraphQL'),
+    new Todo('Ignore Angular'),
+    new Todo('Ignore Vue.js')
 ];
 
 export const getTodos = (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { id } = req.params, { s } = req.query;
 
     try {
         if (!id) {
-            res.status(200).json(todos);
+            if (!s) {
+                res.status(200).json(todos);
+            } else {
+            
+                const filteredTodos = todos.filter(todo => todo.task.toLowerCase().includes(s.toString().toLowerCase()));
+
+                if (!filteredTodos) {
+                    res.status(404).json({ status: 'No todos found' });
+                }
+
+                res.status(200).json(filteredTodos);
+            }
         }
 
         const todo = todos.find(todo => todo.getID() === +id);
