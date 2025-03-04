@@ -44,8 +44,7 @@ export const createTodo = (req: Request, res: Response) => {
 };
 
 export const updateTodo = (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { task, done } = req.body;
+    const { id } = req.params,  { task, done } = req.body;
 
     try {
         if (!id) {
